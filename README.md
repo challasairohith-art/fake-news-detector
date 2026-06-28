@@ -3,18 +3,18 @@
 An AI-powered web app that detects fake news using Machine Learning built from scratch.
 
 ## Live Demo
-🔗 https://fake-news-detector-xxxx.onrender.com
+https://fake-news-detector-1zuz.onrender.com/
 
 ## Screenshots
 ![App Screenshot](screenshots/app.png)
 
 ## How It Works
-This project uses **TF-IDF (Term Frequency-Inverse Document Frequency)** to convert news text into numbers that a machine learning model can understand.
+This project uses TF-IDF (Term Frequency-Inverse Document Frequency) to convert news text into numbers that a machine learning model can understand.
 
-- **TF (Term Frequency):** How often a word appears in a news article
-- **IDF (Inverse Document Frequency):** How rare that word is across all articles
+- TF (Term Frequency): How often a word appears in a news article
+- IDF (Inverse Document Frequency): How rare that word is across all articles
 - Words that appear frequently in fake news (like "BREAKING", "UNBELIEVABLE") get high scores
-- A **Logistic Regression** model then classifies the article as REAL or FAKE based on these scores
+- A Logistic Regression model then classifies the article as REAL or FAKE based on these scores
 
 ## Model Performance
 - Accuracy: 94.94%
