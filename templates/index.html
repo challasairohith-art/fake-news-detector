@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background: white; padding: 40px; border-radius: 16px; width: 600px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h1 { font-size: 24px; margin-bottom: 8px; color: #1a1a1a; }
+        p.subtitle { font-size: 14px; color: #666; margin-bottom: 24px; }
+        textarea { width: 100%; height: 140px; padding: 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; resize: none; outline: none; }
+        textarea:focus { border-color: #4f46e5; }
+        button { margin-top: 14px; width: 100%; padding: 14px; background: #4f46e5; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #4338ca; }
+        .result { margin-top: 24px; padding: 20px; border-radius: 10px; display: none; }
+        .result.fake { background: #fef2f2; border: 1px solid #fca5a5; }
+        .result.real { background: #f0fdf4; border: 1px solid #86efac; }
+        .result-label { font-size: 22px; font-weight: bold; margin-bottom: 6px; }
+        .result.fake .result-label { color: #dc2626; }
+        .result.real .result-label { color: #16a34a; }
+        .result-confidence { font-size: 14px; color: #555; }
+        .loading { text-align: center; color: #888; margin-top: 16px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detector</h1>
+        <p class="subtitle">Paste a news statement below and we'll analyse it using AI.</p>
+        <textarea id="statement" placeholder="e.g. The government announced a new policy on climate change..."></textarea>
+        <button onclick="analyse()">Analyse</button>
+        <p class="loading" id="loading">Analysing...</p>
+        <div class="result" id="result">
+            <p class="result-label" id="result-label"></p>
+            <p class="result-confidence" id="result-confidence"></p>
+        </div>
+    </div>
+    <script>
+        async function analyse() {
+            const statement = document.getElementById('statement').value.trim();
+            if (!statement) { alert('Please enter a statement.'); return; }
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ statement })
+            });
+            const data = await response.json();
+            document.getElementById('loading').style.display = 'none';
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result ' + data.prediction.toLowerCase();
+            document.getElementById('result-label').textContent = data.prediction === 'REAL' ? 'Real News' : 'Fake News';
+            document.getElementById('result-confidence').textContent = 'Confidence: ' + data.confidence + '%';
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

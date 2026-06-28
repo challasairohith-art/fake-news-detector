@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.csv
+*.zip
+*.pyc
+*.tsv
+*.pkl
+.DS_Store
+README
+check_labels.py
+download_data.py
+test_model.py
