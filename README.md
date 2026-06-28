@@ -8,6 +8,12 @@ https://fake-news-detector-1zuz.onrender.com/
 ## Screenshots
 ![App Screenshot](screenshots/app.png)
 
+## Model Performance Chart
+![Performance Chart](performance_chart.png)
+
+## Confusion Matrix
+![Confusion Matrix](confusion_matrix.png)
+
 ## How It Works
 This project uses TF-IDF (Term Frequency-Inverse Document Frequency) to convert news text into numbers that a machine learning model can understand.
 
@@ -22,8 +28,11 @@ This project uses TF-IDF (Term Frequency-Inverse Document Frequency) to convert 
 - Recall: 93% (REAL), 97% (FAKE)
 - Trained on 72,134 real world news articles
 
-## Confusion Matrix
-![Confusion Matrix](confusion_matrix.png)
+## Known Limitations
+- Model is trained primarily on English language news articles
+- Works best on political and general news content
+- May not perform as well on highly technical or regional news
+- Dataset is mostly US and UK based news sources
 
 ## Tech Stack
 - Python, Scikit-learn, Flask

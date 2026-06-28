@@ -1,37 +1,25 @@
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-import pickle
-import re
+import numpy as np
 
-df = pd.read_csv('WELFake_Dataset.csv')
-df = df.dropna(subset=['title', 'text', 'label'])
+labels = ['Accuracy', 'Precision\n(REAL)', 'Recall\n(REAL)', 'Precision\n(FAKE)', 'Recall\n(FAKE)']
+values = [94.94, 95, 93, 94, 97]
+colors = ['#4f46e5', '#06b6d4', '#06b6d4', '#f59e0b', '#f59e0b']
 
-def clean_text(text):
-    text = str(text).lower()
-    text = re.sub(r'http\S+', '', text)
-    text = re.sub(r'[^a-zA-Z\s]', '', text)
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text[:500]
+fig, ax = plt.subplots(figsize=(10, 5))
+bars = ax.bar(labels, values, color=colors, width=0.5, edgecolor='white', linewidth=1.5)
 
-df['combined'] = (df['title'] + ' ' + df['text']).apply(clean_text)
+for bar, val in zip(bars, values):
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+            f'{val}%', ha='center', va='bottom', fontsize=12, fontweight='bold')
 
-X_train, X_test, y_train, y_test = train_test_split(
-    df['combined'], df['label'], test_size=0.2, random_state=42, stratify=df['label']
-)
+ax.set_ylim(85, 100)
+ax.set_ylabel('Score (%)', fontsize=13)
+ax.set_title('Fake News Detector — Model Performance', fontsize=15, fontweight='bold', pad=20)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.axhline(y=90, color='red', linestyle='--', alpha=0.4, label='90% threshold')
+ax.legend()
 
-model = pickle.load(open('model.pkl', 'rb'))
-vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
-
-X_test_vec = vectorizer.transform(X_test)
-y_pred = model.predict(X_test_vec)
-
-cm = confusion_matrix(y_test, y_pred)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['REAL', 'FAKE'])
-disp.plot(cmap='Blues')
-plt.title('Fake News Detector - Confusion Matrix')
-plt.savefig('confusion_matrix.png', dpi=150, bbox_inches='tight')
-print("Confusion matrix saved!")
+plt.tight_layout()
+plt.savefig('performance_chart.png', dpi=150, bbox_inches='tight')
+print("Performance chart saved!")
