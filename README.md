@@ -3,7 +3,7 @@
 An AI-powered web app that detects fake news using Machine Learning built from scratch.
 
 ## Live Demo
-🔗 Coming soon after deployment
+🔗 https://fake-news-detector-xxxx.onrender.com
 
 ## Screenshots
 ![App Screenshot](screenshots/app.png)
@@ -17,10 +17,10 @@ This project uses **TF-IDF (Term Frequency-Inverse Document Frequency)** to conv
 - A **Logistic Regression** model then classifies the article as REAL or FAKE based on these scores
 
 ## Model Performance
-- ✅ Accuracy: 94.94%
-- ✅ Precision: 95% (REAL), 94% (FAKE)
-- ✅ Recall: 93% (REAL), 97% (FAKE)
-- ✅ Trained on 72,134 real world news articles
+- Accuracy: 94.94%
+- Precision: 95% (REAL), 94% (FAKE)
+- Recall: 93% (REAL), 97% (FAKE)
+- Trained on 72,134 real world news articles
 
 ## Confusion Matrix
 ![Confusion Matrix](confusion_matrix.png)
@@ -33,12 +33,18 @@ This project uses **TF-IDF (Term Frequency-Inverse Document Frequency)** to conv
 
 ## How to Run Locally
 1. Clone the repo
+   git clone https://github.com/challasairohith-art/fake-news-detector.git
+   cd fake-news-detector
 2. Create virtual environment
+   python3 -m venv venv
+   source venv/bin/activate
 3. Install dependencies
+   pip install -r requirements.txt
 4. Download WELFake dataset from Kaggle
-Place `WELFake_Dataset.csv` in the root folder
-
+   https://www.kaggle.com/datasets/saurabhshahane/fake-news-classification
+   Place WELFake_Dataset.csv in the root folder
 5. Train the model
-
+   python3 train_model.py
 6. Run the app
-7. Open `http://127.0.0.1:5000`
+   python3 app.py
+7. Open http://127.0.0.1:5000
